@@ -20,7 +20,7 @@ define( 'YOURLS_DB_NAME', 'yourls' );
 define( 'YOURLS_DB_HOST', 'localhost' );
 
 /** MySQL tables prefix */
-define( 'YOURLS_DB_PREFIX', 'yourls_' );
+define( 'YOURLS_DB_PREFIX', 'yourls__' );
 
 /*
  ** Site options
