@@ -168,40 +168,57 @@ function yourls_create_sql_tables() {
 	// Create Table Query
 	$create_tables = array();
 	$create_tables[YOURLS_DB_TABLE_URL] =
-		'CREATE TABLE IF NOT EXISTS `'.YOURLS_DB_TABLE_URL.'` ('.
+		'CREATE TABLE IF NOT EXISTS `' . YOURLS_DB_TABLE_URL . '` ('.
+		'`url_id` bigint(20) NOT NULL AUTO_INCREMENT,'.
 		'`keyword` varchar(200) BINARY NOT NULL,'.
 		'`url` text BINARY NOT NULL,'.
 		'`title` text CHARACTER SET utf8,'.
 		'`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,'.
 		'`ip` VARCHAR(41) NOT NULL,'.
 		'`clicks` INT(10) UNSIGNED NOT NULL,'.
-		' PRIMARY KEY  (`keyword`),'.
-		' KEY `timestamp` (`timestamp`),'.
-		' KEY `ip` (`ip`)'.
-		');';
+		' PRIMARY KEY (`url_id`),'.
+		' KEY `keyword` (`keyword`,`timestamp`,`ip`)'.
+		') DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;';
+		
+	$create_tables[YOURLS_DB_TABLE_LOG_META] =
+		'CREATE TABLE IF NOT EXISTS `' . YOURLS_DB_TABLE_LOG_META . '` ('.
+		'`log_meta_id` bigint(20) NOT NULL AUTO_INCREMENT,'.
+		'`click_id` bigint(20) NOT NULL,'.
+		'`log_meta_type` varchar(200) NOT NULL,'.
+		'`log_meta_value` longtext,'.
+		' PRIMARY KEY (`logmeta_id`)'.
+		') DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;';
 
 	$create_tables[YOURLS_DB_TABLE_OPTIONS] = 
-		'CREATE TABLE IF NOT EXISTS `'.YOURLS_DB_TABLE_OPTIONS.'` ('.
+		'CREATE TABLE IF NOT EXISTS `' . YOURLS_DB_TABLE_OPTIONS . '` ('.
 		'`option_id` bigint(20) unsigned NOT NULL auto_increment,'.
 		'`option_name` varchar(64) NOT NULL default "",'.
 		'`option_value` longtext NOT NULL,'.
-		'PRIMARY KEY  (`option_id`,`option_name`),'.
-		'KEY `option_name` (`option_name`)'.
-		') AUTO_INCREMENT=1 ;';
+		'`autoload` tinyint(1) NOT NULL DEFAULT \'1\','.
+		' PRIMARY KEY (`option_id`,`option_name`),'.
+		' KEY `option_name` (`option_name`)'.
+		') DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;';
 		
 	$create_tables[YOURLS_DB_TABLE_LOG] = 
-		'CREATE TABLE IF NOT EXISTS `'.YOURLS_DB_TABLE_LOG.'` ('.
-		'`click_id` int(11) NOT NULL auto_increment,'.
-		'`click_time` datetime NOT NULL,'.
-		'`shorturl` varchar(200) BINARY NOT NULL,'.
-		'`referrer` varchar(200) NOT NULL,'.
-		'`user_agent` varchar(255) NOT NULL,'.
+		'CREATE TABLE IF NOT EXISTS `' . YOURLS_DB_TABLE_LOG . '` ('.
+		'`click_id` bigint(20) NOT NULL AUTO_INCREMENT,'.
+		'`url_id` bigint(20) NOT NULL,'.
+		'`click_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,'.
+		'`referrer` varchar(200) NOT NULL DEFAULT \'direct\','.
 		'`ip_address` varchar(41) NOT NULL,'.
 		'`country_code` char(2) NOT NULL,'.
-		'PRIMARY KEY  (`click_id`),'.
-		'KEY `shorturl` (`shorturl`)'.
-		') AUTO_INCREMENT=1 ;';
+		' PRIMARY KEY (`click_id`),'.
+		' KEY `url_id` (`url_id`)'.
+		') DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;';
 
+	$create_tables[YOURLS_DB_TABLE_URL_META] =
+		'CREATE TABLE IF NOT EXISTS `' . YOURLS_DB_TABLE_URL_META . '` ('.
+		'`url_meta_id` bigint(20) NOT NULL AUTO_INCREMENT,'.
+		'`url_id` bigint(20) NOT NULL,'.
+		'`url_meta_type` varchar(200) NOT NULL,'.
+		'`url_meta_value` longtext,'.
+		' PRIMARY KEY (`urlmeta_id`)'.
+		') DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;';
 
 	$create_table_count = 0;
 	

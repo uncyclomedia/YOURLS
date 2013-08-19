@@ -57,6 +57,10 @@ if( !defined( 'YOURLS_PAGEDIR' ) )
 if( !defined( 'YOURLS_DB_TABLE_URL' ) )
 	define( 'YOURLS_DB_TABLE_URL', YOURLS_DB_PREFIX.'url' );
 
+// table to store URLs meta datas
+if( !defined( 'YOURLS_DB_TABLE_URL_META' ) )
+	define( 'YOURLS_DB_TABLE_URL_META', YOURLS_DB_TABLE_URL.'_meta' );
+
 // table to store options
 if( !defined( 'YOURLS_DB_TABLE_OPTIONS' ) )
 	define( 'YOURLS_DB_TABLE_OPTIONS', YOURLS_DB_PREFIX.'options' );
@@ -64,6 +68,10 @@ if( !defined( 'YOURLS_DB_TABLE_OPTIONS' ) )
 // table to store hits, for stats
 if( !defined( 'YOURLS_DB_TABLE_LOG' ) )
 	define( 'YOURLS_DB_TABLE_LOG', YOURLS_DB_PREFIX.'log' );
+
+// table to store hits meta datas
+if( !defined( 'YOURLS_DB_TABLE_LOG_META' ) )
+	define( 'YOURLS_DB_TABLE_LOG_META', YOURLS_DB_TABLE_LOG.'_meta' );
 
 // minimum delay in sec before a same IP can add another URL. Note: logged in users are not throttled down.
 if( !defined( 'YOURLS_FLOOD_DELAY_SECONDS' ) )
